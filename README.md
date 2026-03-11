@@ -1,110 +1,110 @@
- # 👋 Hey, I'm Marcel!
-
-**IT Student** | **Full-Stack Developer** | **E-Commerce & Dropshipping Enthusiast** 🇸🇪
-
----
-
-## 🚀 About Me
-
-I'm an IT student from Sweden passionate about building scalable e-commerce solutions and exploring the world of dropshipping. Currently diving deep into full-stack development, creating real-world projects, and expanding my technical skills. Always eager to collaborate with fellow developers and learn from the community!
-
----
-
-## 💻 Tech Skills
-
-- **Frontend:** HTML5, CSS3, JavaScript, React
-- **Backend:** Node.js, PHP, Laravel
-- **Databases:** MySQL, PostgreSQL
-- **E-Commerce:** WooCommerce, Shopify integration
-- **Tools:** Git, Docker, REST APIs
-- **Currently Learning:** Advanced JavaScript, React optimization, SEO for e-commerce
-
----
-
-## 🎯 What I'm Working On
-
-### 🛍️ xoxonitepromotion.store
-A full-stack e-commerce platform built from scratch focusing on dropshipping integration.
-- **Status:** In Development
-- **Tech Stack:** PHP, MySQL, WooCommerce, JavaScript
-- **Focus:** Product optimization, SEO, conversion rate optimization
-- **Live:** [xoxonitepromotion.store](https://xoxonitepromotion.store)
-
-### 🧩 Product Quality Enhancement Extension
-A powerful browser extension designed to improve product quality for dropshipping businesses.
-- **Status:** Active Development
-- **Tech Stack:** JavaScript, Chrome/Firefox APIs
-- **Features:**
-  - Product quality analysis and scoring
-  - Automated product data validation
-  - Supplier quality checks
-  - Real-time recommendations for product improvements
-- **Purpose:** Help dropshippers source better products and optimize their catalogs for higher conversions
-
----
-
-## 🔥 Current Focus
-
-- 📦 **E-Commerce & Dropshipping** – Building profitable online stores with quality products
-- 🛒 **WooCommerce Optimization** – SEO, product listings, conversions
-- 🔧 **Browser Extension Development** – Creating tools to automate and improve e-commerce workflows
-- 📈 **Full-Stack Development** – From database to UI
-- ✨ **Product Quality Assurance** – Ensuring dropshipping success through better sourcing
-
----
-
-## 🌱 Learning Goals
-
-- [ ] Master full-stack e-commerce development
-- [ ] Optimize websites for search engines (SEO)
-- [ ] Build scalable backend systems
-- [ ] Create powerful browser extensions for e-commerce
-- [ ] Understand dropshipping logistics, sourcing & scaling
-- [ ] Develop AI-powered product quality assessment tools
-
----
-
-## 🤝 Looking for Collaboration!
-
-I'm actively seeking collaboration on:
-- ✅ E-commerce projects & dropshipping platforms
-- ✅ Full-stack web development
-- ✅ Browser extension development
-- ✅ Product quality & supplier management tools
-- ✅ SEO optimization strategies
-- ✅ Open-source contributions
-
-**Let's build something awesome together!** 🚀
-
----
-
-## 📬 Connect With Me
-
-- **Email:** [Coupdo@xoxonitepromotion.store](mailto:Coupdo@xoxonitepromotion.store)
-- **Website:** [xoxonitepromotion.store](https://xoxonitepromotion.store)
-- **Twitter/X:** [@Marcel189994254](https://twitter.com/Marcel189994254)
-- **Location:** 🇸🇪 Sweden
-
----
-
-## 💡 Quick Facts
-
-- 🎓 Currently studying IT
-- 💼 Building real-world e-commerce solutions with quality-first approach
-- 🌍 Open to remote collaboration opportunities
-- 🎯 Passionate about solving problems through code
-- 📚 Always learning and improving my craft
-- 🔍 Focused on improving product sourcing and quality in dropshipping
-
----
-
-## 🎨 Latest Projects & Achievements
-
-- 🏗️ Built **xoxonitepromotion.store** from scratch
-- 🧩 Developing a **Product Quality Enhancement Extension**
-- 📖 Contributing to the e-commerce development community
-
----
-
-**Thanks for stopping by! Feel free to check out my projects, and don't hesitate to reach out if you want to collaborate on e-commerce solutions, browser extensions, or anything tech-related. I'm always excited to connect with fellow developers and entrepreneurs!** ✨
+ID );
+$desc = $post->post_content;
+$meta_desc = get_post_meta( $post->ID, '_yoast_wpseo_metadesc', true );
+if ( empty( $meta_desc ) ) {
+$meta_desc = get_post_meta( $post->ID, '_aioseo_description', true );
+}
+$product = false;
+if ( function_exists( 'wc_get_product' ) ) {
+$product = wc_get_product( $post->ID );
+}
+$images = array();
+if ( $product ) {
+$images = $product->get_gallery_image_ids();
+$thumb = $product->get_image_id();
+if ( $thumb ) {
+array_unshift( $images, $thumb );
+}
+}
+$score = 0;
+$checks = array();
+// Title length
+$title_len = mb_strlen( $title );
+if ( $title_len >= 50 && $title_len <= 80 ) {
+$score += 20;
+$checks[] = array( 'ok' => true, 'msg' => "Title length:
+{$title_len} chars (good)" );
+} else {
+$checks[] = array( 'ok' => false, 'msg' => "Title length:
+{$title_len} chars (recommended 50–80)" );
+}
+// Description length
+$desc_len = mb_strlen( wp_strip_all_tags( $desc ) );
+if ( $desc_len >= 200 ) {
+$score += 20;
+$checks[] = array( 'ok' => true, 'msg' => "Description
+length: {$desc_len} chars (good)" );
+} else {
+$checks[] = array( 'ok' => false, 'msg' => "Description
+length: {$desc_len} chars (recommended ≥200)" );
+}
+// Images count
+$img_count = count( $images );
+if ( $img_count >= 3 ) {
+$score += 20;
+$checks[] = array( 'ok' => true, 'msg' => "Images:
+{$img_count} (good)" );
+} else {
+$checks[] = array( 'ok' => false, 'msg' => "Images:
+{$img_count} (recommended ≥3)" );
+}
+// Meta description
+$meta_len = mb_strlen( wp_strip_all_tags( $meta_desc ) );
+if ( $meta_len >= 120 && $meta_len <= 160 ) {
+$score += 20;
+$checks[] = array( 'ok' => true, 'msg' => "Meta
+description: {$meta_len} chars (good)" );
+} else {
+$checks[] = array( 'ok' => false, 'msg' => "Meta
+description: {$meta_len} chars (recommended 120–160)" );
+}
+// Price present
+if ( $product && $product->get_price() !== '' ) {
+$score += 20;
+$checks[] = array( 'ok' => true, 'msg' => "Price set: " .
+wc_price( $product->get_price() ) );
+} else {
+$checks[] = array( 'ok' => false, 'msg' => "Price not set" );
+}
+// Output
+$color = $score >= 80 ? '#0f9d58' : ( $score >= 50 ? '#f4b400'
+: '#db4437' );
+echo '<div>';
+echo "<strong>Score: </strong><span>{$score}</span>/100";
+echo '<ul>';
+foreach ( $checks as $c ) {
+$icon = $c['ok'] ? '' : '';
+echo '<li>' . esc_html( $icon . ' ' . $c['msg'] ) . '</li>';
+}
+echo '</ul>';
+echo '<p><strong>Suggestions:</strong></p><ul>';
+if ( $title_len < 50 || $title_len > 80 ) {
+echo '<li>Adjust title to 50–80 chars and include the main
+keyword at the start.</li>';
+}
+if ( $desc_len < 200 ) {
+echo '<li>Expand description to explain benefits &
+features; use bullets for specs.</li>';
+}
+if ( $img_count < 3 ) {
+echo '<li>Add at least 3 images showing different
+angles/use cases; add alt text.</li>';
+}
+if ( $meta_len < 120 || $meta_len > 160 ) {
+echo '<li>Write meta description of ~120–160 chars
+highlighting main benefit + CTA.</li>';
+}
+if ( ! ( $product && $product->get_price() !== '' ) ) {
+echo '<li>Set a competitive price.</li>';
+}
+echo '</ul>';
+echo '<p>Tip:
+Connect an SEO plugin (Yoast / Rank Math) for more SEO checks.</p>';
+echo '</div>';
+}
+public function save_meta( $post_id, $post ) {
+// Nothing to save for MVP, placeholder for future.
+}
+}
+new WC_Listing_Optimizer_MVP();
 
