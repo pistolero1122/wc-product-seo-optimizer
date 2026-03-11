@@ -103,7 +103,7 @@ Connect an SEO plugin (Yoast / Rank Math) for more SEO checks.</p>';
 echo '</div>';
 }
 public function save_meta( $post_id, $post ) {
-// Nothing to save for MVP, placeholder for future.
+// Nothing to save for the MVP; placeholder for future use.
 }
 }
 new WC_Listing_Optimizer_MVP();
